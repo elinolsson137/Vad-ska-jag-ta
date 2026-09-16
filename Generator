@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vad ska jag äta?</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f5f0;
+            text-align: center;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .description {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .filters {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        select {
+            padding: 10px;
+            margin: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #d35400;
+        }
+
+        .result {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 25px;
+            display: none;
+        }
+
+        .result h2 {
+            font-size: 28px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🍴 Vad ska jag äta?</h1>
+
+        <p class="description">
+            Kan inte bestämma dig? Låt oss välja åt dig!
+        </p>
+
+        <div class="filters">
+
+            <h3>Vad är du sugen på?</h3>
+
+            <select id="category">
+                <option value="alla">Spelar ingen roll</option>
+                <option value="italienskt">Italienskt</option>
+                <option value="asiatiskt">Asiatiskt</option>
+                <option value="mexikanskt">Mexikanskt</option>
+                <option value="svenskt">Svenskt</option>
+                <option value="vegetariskt">Vegetariskt</option>
+            </select>
+
+            <br><br>
+
+            <button onclick="generateFood()">
+                🎲 Vad ska jag äta?
+            </button>
+
+        </div>
+
+        <div class="result" id="result">
+            <h2 id="foodName"></h2>
+            <p id="foodDescription"></p>
+        </div>
+
+    </div>
+
+    <script>
+
+        const foods = [
+            {
+                name: "🍕 Pizza Margherita",
+                category: "italienskt",
+                description: "En klassisk pizza med tomat, mozzarella och basilika."
+            },
+            {
+                name: "🍝 Pasta Carbonara",
+                category: "italienskt",
+                description: "Krämig pasta med ägg, parmesan och bacon."
+            },
+            {
+                name: "🍜 Pad Thai",
+                category: "asiatiskt",
+                description: "Thailändska nudlar med grönsaker, jordnötter och lime."
+            },
+            {
+                name: "🍣 Sushi",
+                category: "asiatiskt",
+                description: "Japanska risbitar med fisk, grönsaker och soja."
+            },
+            {
+                name: "🌮 Tacos",
+                category: "mexikanskt",
+                description: "Tacos med färs, grönsaker, ost och salsa."
+            },
+            {
+                name: "🥔 Köttbullar med potatis",
+                category: "svenskt",
+                description: "Klassiska svenska köttbullar med potatis och lingonsylt."
+            },
+            {
+                name: "🥗 Halloumisallad",
+                category: "vegetariskt",
+                description: "En fräsch sallad med halloumi, tomat och gurka."
+            },
+            {
+                name: "🍛 Vegetarisk curry",
+                category: "vegetariskt",
+                description: "En smakrik curry med grönsaker och kokosmjölk."
+            }
+        ];
+
+        function generateFood() {
+
+            const selectedCategory =
+                document.getElementById("category").value;
+
+            let availableFoods = foods;
+
+            if (selectedCategory !== "alla") {
+                availableFoods = foods.filter(
+                    food => food.category === selectedCategory
+                );
+            }
+
+            const randomIndex =
+                Math.floor(Math.random() * availableFoods.length);
+
+            const food = availableFoods[randomIndex];
+
+            document.getElementById("foodName").textContent =
+                food.name;
+
+            document.getElementById("foodDescription").textContent =
+                food.description;
+
+            document.getElementById("result").style.display = "block";
+        }
+
+    </script>
+
+</body>
+</html>
