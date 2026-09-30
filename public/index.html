@@ -3,78 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vad vill jag äta?</title>
+
+    <title>Vad ska jag äta?</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #dbb36e;
-            text-align: center;
-            margin: 0;
-            padding: 40px;
+
+        /* =========================
+           GRUND
+        ========================= */
+
+        * {
+            box-sizing: border-box;
         }
 
-        h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+
+            background: linear-gradient(
+                135deg,
+                #f8fafc,
+                #eef2ff
+            );
+
+            color: #1f2937;
+
+            display: flex;
+            justify-content: center;
+
+            padding: 50px 20px;
         }
+
+
+        /* =========================
+           HUVUDCONTAINER
+        ========================= */
 
         .container {
-            max-width: 600px;
-            margin: auto;
+            width: 100%;
+            max-width: 650px;
+            text-align: center;
+        }
+
+
+        /* =========================
+           RUBRIK
+        ========================= */
+
+        h1 {
+            font-size: 44px;
+            margin: 0 0 10px;
+
+            font-weight: 800;
+            color: #111827;
         }
 
         .description {
             font-size: 18px;
-            color: #555;
-            margin-bottom: 30px;
+            color: #6b7280;
+
+            margin: 0 0 35px;
         }
+
+
+        /* =========================
+           FILTER-KORT
+        ========================= */
 
         .filters {
-            background-color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.95);
+
+            padding: 40px 30px;
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.08);
+
+            border: 1px solid #e5e7eb;
         }
+
+        .filters h3 {
+            font-size: 21px;
+            margin: 0 0 20px;
+
+            color: #111827;
+        }
+
+
+        /* =========================
+           SELECT
+        ========================= */
 
         select {
-            padding: 10px;
-            margin: 8px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
+            width: 100%;
+            max-width: 300px;
 
-        button {
-            background-color: #e67e22;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 10px;
+            padding: 14px 18px;
+
+            font-size: 16px;
+
+            background-color: white;
+            color: #374151;
+
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+
             cursor: pointer;
+
+            transition: 0.2s;
         }
 
-        button:hover {
-            background-color: #d35400;
+        select:hover {
+            border-color: #c7d2fe;
         }
+
+        select:focus {
+            outline: none;
+
+            border-color: #6366f1;
+
+            box-shadow:
+                0 0 0 4px rgba(99, 102, 241, 0.12);
+        }
+
+
+        /* =========================
+           HUVUDKNAPP
+        ========================= */
+
+        .generate-button {
+            margin-top: 25px;
+
+            padding: 15px 30px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: #6366f1;
+            color: white;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+        }
+
+        .generate-button:hover {
+            background: #4f46e5;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(79, 70, 229, 0.25);
+        }
+
+        .generate-button:active {
+            transform: translateY(0);
+        }
+
+
+        /* =========================
+           RESULTAT
+        ========================= */
 
         .result {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 25px;
-            display: none;
-        }
+    background: white;
+
+    padding: 35px 30px;
+
+    border-radius: 24px;
+
+    margin-top: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.08);
+
+    border: 1px solid #e5e7eb;
+}
+
+
+/* När maträtterna slumpas */
+
+.result-spinning {
+    animation: shake 0.1s infinite;
+}
+
+
+/* När slutresultatet visas */
+
+.result-show {
+    animation: resultPop 0.5s ease;
+}
+
+
+/* Slutresultatet poppar fram */
+
+@keyframes resultPop {
+
+    0% {
+        opacity: 0;
+        transform: scale(0.7) rotate(-3deg);
+    }
+
+    60% {
+        transform: scale(1.05) rotate(2deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+
+}
+
+
+/* Liten skakning medan maten slumpas */
+
+@keyframes shake {
+
+    0% {
+        transform: translateX(-2px);
+    }
+
+    50% {
+        transform: translateX(2px);
+    }
+
+    100% {
+        transform: translateX(-2px);
+    }
+
+}
 
         .result h2 {
-            font-size: 28px;
+            font-size: 30px;
+
+            margin: 0 0 12px;
+
+            color: #111827;
         }
+
+        .result p {
+            font-size: 17px;
+
+            color: #6b7280;
+
+            line-height: 1.6;
+
+            margin: 0;
+        }
+
+
+        /* =========================
+           FÄRGVAL
+        ========================= */
+
+        .color-section {
+            margin-top: 40px;
+        }
+
+        .color-section h2 {
+            font-size: 28px;
+
+            margin-bottom: 18px;
+
+            color: #111827;
+        }
+
+        .color-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+        .color-buttons button {
+            padding: 13px 25px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        /* RÖD */
+
+        #redButton {
+            background: #ef4444;
+        }
+
+        #redButton:hover {
+            background: #dc2626;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* BLÅ */
+
+        #blueButton {
+            background: #3b82f6;
+        }
+
+        #blueButton:hover {
+            background: #2563eb;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* GRÖN */
+
+        #greenButton {
+            background: #22c55e;
+        }
+
+        #greenButton:hover {
+            background: #16a34a;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           ANIMATION
+        ========================= */
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+        /* =========================
+           MOBIL
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 30px 15px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .description {
+                font-size: 16px;
+            }
+
+            .filters {
+                padding: 30px 20px;
+            }
+
+            .result {
+                padding: 30px 20px;
+            }
+
+            .result h2 {
+                font-size: 25px;
+            }
+
+        }
+
     </style>
+     <link rel="stylesheet" href="styles.css">   
 </head>
+
 
 <body>
 
     <div class="container">
+
+        <!-- RUBRIK -->
 
         <h1>🍴 Vad ska jag äta?</h1>
 
@@ -82,126 +410,97 @@
             Kan inte bestämma dig? Låt oss välja åt dig!
         </p>
 
+
+        <!-- FILTER -->
+
         <div class="filters">
 
             <h3>Vad är du sugen på?</h3>
 
             <select id="category">
-                <option value="alla">Spelar ingen roll</option>
-                <option value="italienskt">Italienskt</option>
-                <option value="asiatiskt">Asiatiskt</option>
-                <option value="mexikanskt">Mexikanskt</option>
-                <option value="svenskt">Svenskt</option>
-                <option value="vegetariskt">Vegetariskt</option>
+
+                <option value="alla">
+                    Spelar ingen roll
+                </option>
+
+                <option value="italienskt">
+                    Italienskt
+                </option>
+
+                <option value="asiatiskt">
+                    Asiatiskt
+                </option>
+
+                <option value="mexikanskt">
+                    Mexikanskt
+                </option>
+
+                <option value="svenskt">
+                    Svenskt
+                </option>
+
+                <option value="vegetariskt">
+                    Vegetariskt
+                </option>
+
             </select>
 
-            <br><br>
 
-            <button onclick="generateFood()">
-                🎲 Vad ska jag äta?
-            </button>
+            <br>
+
+
+           <button
+    class="generate-button"
+    onclick="generateFood()"
+>
+    <span id="dice">🎲</span>
+    Vad ska jag äta?
+</button>
 
         </div>
 
-        <div class="result" id="result">
+
+        <!-- RESULTAT -->
+
+        <div
+            class="result"
+            id="result"
+            style="display: none;"
+        >
+
             <h2 id="foodName"></h2>
+
             <p id="foodDescription"></p>
+
+        </div>
+
+
+        <!-- FÄRGVAL -->
+
+        <div class="color-section">
+
+            <h2>🎨 Välj en färg</h2>
+
+            <div class="color-buttons">
+
+                <button id="redButton">
+                    Röd
+                </button>
+
+                <button id="blueButton">
+                    Blå
+                </button>
+
+                <button id="greenButton">
+                    Grön
+                </button>
+
+            </div>
+
         </div>
 
     </div>
-
-    <script>
-
-        const foods = [
-            {
-                name: "🍕 Pizza Margherita",
-                category: "italienskt",
-                description: "En klassisk pizza med tomat, mozzarella och basilika."
-            },
-            {
-                name: "🍝 Pasta Carbonara",
-                category: "italienskt",
-                description: "Krämig pasta med ägg, parmesan och bacon."
-            },
-            {
-                name: "🍜 Pad Thai",
-                category: "asiatiskt",
-                description: "Thailändska nudlar med grönsaker, jordnötter och lime."
-            },
-            {
-                name: "🍣 Sushi",
-                category: "asiatiskt",
-                description: "Japanska risbitar med fisk, grönsaker och soja."
-            },
-            {
-                name: "🌮 Tacos",
-                category: "mexikanskt",
-                description: "Tacos med färs, grönsaker, ost och salsa."
-            },
-            {
-                name: "🥔 Köttbullar med potatis",
-                category: "svenskt",
-                description: "Klassiska svenska köttbullar med potatis och lingonsylt."
-            },
-            {
-                name: "🥗 Halloumisallad",
-                category: "vegetariskt",
-                description: "En fräsch sallad med halloumi, tomat och gurka."
-            },
-            {
-                name: "🍛 Vegetarisk curry",
-                category: "vegetariskt",
-                description: "En smakrik curry med grönsaker och kokosmjölk."
-            }
-        ];
-
-        function generateFood() {
-
-            const selectedCategory =
-                document.getElementById("category").value;
-
-            let availableFoods = foods;
-
-            if (selectedCategory !== "alla") {
-                availableFoods = foods.filter(
-                    food => food.category === selectedCategory
-                );
-            }
-
-            const randomIndex =
-                Math.floor(Math.random() * availableFoods.length);
-
-            const food = availableFoods[randomIndex];
-
-            document.getElementById("foodName").textContent =
-                food.name;
-
-            document.getElementById("foodDescription").textContent =
-                food.description;
-
-            document.getElementById("result").style.display = "block";
-        }
-
-    </script>
+ <script src="script.js"></script>
 
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <title>Ändra färg</title>
-</head>
-
-<body>
-
-    <h1>🎨 Välj en färg</h1>
-
-    <button id="redButton">Röd</button>
-    <button id="blueButton">Blå</button>
-    <button id="greenButton">Grön</button>
-
-    <script src="script.js"></script>
-
-</body>
-</html> 
